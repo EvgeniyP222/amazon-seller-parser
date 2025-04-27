@@ -1,0 +1,13 @@
+{
+  "name": "amazon-seller-parser",
+  "version": "1.0.0",
+  "description": "Simple Amazon Seller About Parser with Puppeteer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.3.8",
+    "express": "^4.18.2"
+  }
+}
