@@ -1,5 +1,5 @@
 const express = require('express');
-const puppeteer = require('playwright-chromium'); // Используем puppeteer-core
+const { chromium } = require('playwright-chromium'); // Используем puppeteer-core
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 app.get('/parse', async (req, res) => {
   let browser;
   try {
-    browser = await puppeteer.launch({
+    const browser = await chromium.launch({ ... });
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       headless: true,
       executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser'
