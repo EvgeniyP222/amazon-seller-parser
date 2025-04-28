@@ -1,39 +1,36 @@
 const express = require('express');
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer-core'); // Используем puppeteer-core
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
   res.send('Amazon Seller Parser is running!');
 });
 
+// Новый роут для парсинга
 app.get('/parse', async (req, res) => {
-  const { url } = req.query;
-  if (!url) return res.status(400).send('No URL provided');
-
+  let browser;
   try {
-    const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser'
     });
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
 
-    const aboutSeller = await page.evaluate(() => {
-      const aboutBlock = document.querySelector('#seller-profile-container') || document.querySelector('div[data-asin]');
-      return aboutBlock ? aboutBlock.innerText : null;
-    });
+    const page = await browser.newPage();
+    await page.goto('https://www.amazon.com/sp?seller=A1PA6795UKMFR9'); // Пример страницы продавца
+
+    const title = await page.title();
 
     await browser.close();
 
-    if (aboutSeller) {
-      res.json({ aboutSeller });
-    } else {
-      res.json({ aboutSeller: 'Not found' });
-    }
+    res.send(`Страница загружена! Title: ${title}`);
   } catch (error) {
+    if (browser) {
+      await browser.close();
+    }
     console.error(error);
-    res.status(500).send('Error parsing page');
+    res.status(500).send('Ошибка при парсинге.');
   }
 });
 
