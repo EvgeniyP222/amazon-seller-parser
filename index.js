@@ -40,7 +40,7 @@ app.listen(PORT, () => {
 app.get('/parse', async (req, res) => {
   try {
     const browser = await puppeteer.launch({
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser',
+    executablePath: '/opt/render/project/.render/chrome/opt/google/chrome/chrome',
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: true,
 });
