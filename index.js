@@ -40,9 +40,10 @@ app.listen(PORT, () => {
 app.get('/parse', async (req, res) => {
   try {
     const browser = await puppeteer.launch({
-      args: ['--no-sandbox'],
-      headless: true
-    });
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser',
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    headless: true,
+});
     const page = await browser.newPage();
     
     await page.goto('https://www.amazon.com/sp?seller=A2L77EE7U53NWQ', { waitUntil: 'domcontentloaded' });
