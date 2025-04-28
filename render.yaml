@@ -4,4 +4,8 @@ services:
     env: node
     plan: free
     buildCommand: npm install
-    startCommand: node index.js
+    prebuildCommand: npx playwright install chromium
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
