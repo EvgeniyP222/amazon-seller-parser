@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: amazon-seller-parser
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
