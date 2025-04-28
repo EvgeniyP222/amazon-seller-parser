@@ -11,11 +11,7 @@ app.get('/', (req, res) => {
 app.get('/parse', async (req, res) => {
   let browser;
   try {
-    const browser = await chromium.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      headless: true,
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser'
-    });
+    const browser = await chromium.launch();
 
     const page = await browser.newPage();
     await page.goto('https://www.amazon.com/sp?seller=A1PA6795UKMFR9'); // Пример страницы продавца
