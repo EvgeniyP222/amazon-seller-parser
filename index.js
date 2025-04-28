@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
 app.get('/parse', async (req, res) => {
   let browser;
   try {
-    const browser = await chromium.launch({ ... });
+    const browser = await chromium.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
       headless: true,
       executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium-browser'
