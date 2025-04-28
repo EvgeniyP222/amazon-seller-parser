@@ -37,23 +37,3 @@ app.get('/parse', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-app.get('/parse', async (req, res) => {
-  try {
-    const browser = await puppeteer.launch({
-  args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  headless: true,
-});
-    const page = await browser.newPage();
-    
-    await page.goto('https://www.amazon.com/sp?seller=A2L77EE7U53NWQ', { waitUntil: 'domcontentloaded' });
-    
-    const aboutSeller = await page.$eval('#seller-profile-container', el => el.innerText);
-
-    await browser.close();
-
-    res.send(`About Seller Section:\n\n${aboutSeller}`);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Ошибка при парсинге страницы.');
-  }
-});
