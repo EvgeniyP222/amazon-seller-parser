@@ -1,5 +1,5 @@
 const express = require('express');
-const puppeteer = require('puppeteer-core'); // Используем puppeteer-core
+const puppeteer = require('playwright-chromium'); // Используем puppeteer-core
 const app = express();
 const PORT = process.env.PORT || 3000;
 
