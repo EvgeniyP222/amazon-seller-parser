@@ -4,7 +4,7 @@
   "description": "Amazon Seller Parser using Puppeteer-Core and Express",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
     "postinstall": "playwright install chromium"
   },
   "dependencies": {
